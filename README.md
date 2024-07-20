@@ -43,27 +43,27 @@ BuyAfrica aims to:
 
 Our project is organized as a monorepo, with separate directories for the API and the frontend application. Here's an overview of the major folders:
 
-BuyAfrica/
-├── api/
-│ ├── config/
-│ ├── middleware/
-│ ├── models/
-│ ├── routes/
-│ ├── services/
-│ ├── templates/
-│ ├── types/
-│ └── utils/
-├── frontend/
-│ ├── .github/
-│ ├── .vitest/
-│ ├── .vscode/
-│ ├── public/
-│ └── src/
-│ ├── assets/
-│ ├── components/
-│ └── utils/
-├── server.ts
-└── README.md
+BuyAfrica/  
+├── api/  
+│ ├── config/  
+│ ├── middleware/  
+│ ├── models/  
+│ ├── routes/  
+│ ├── services/  
+│ ├── templates/  
+│ ├── types/  
+│ └── utils/  
+├── frontend/  
+│ ├── .github/  
+│ ├── .vitest/  
+│ ├── .vscode/  
+│ ├── public/  
+│ └── src/  
+│ ├── assets/  
+│ ├── components/  
+│ └── utils/  
+├── server.ts  
+└── README.md  
 
 ### API Folder Structure
 
