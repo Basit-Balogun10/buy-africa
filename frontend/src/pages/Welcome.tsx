@@ -1,10 +1,10 @@
-import Logo from 'components/Logo'
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import { GuestUserRole, IAccount, WelcomePageActiveViewIndex } from '../types'
 import { useNavigate, useLocation } from 'react-router-dom'
+import axios from 'axios'
+import Logo from 'components/Logo'
 import AppButton from 'components/AppButton'
 import AppTextInput from 'components/AppTextInput'
+import { IAccount, IUserFields, WelcomePageActiveViewIndex } from '../types'
 import { getDataFromQueryParams } from '../helpers'
 
 const Welcome = () => {
@@ -15,15 +15,11 @@ const Welcome = () => {
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [OTP, setOTP] = useState('')
-  const [eventCode, setEventCode] = useState('')
   const [OTPError, setOTPError] = useState('')
-  const [eventCodeError, setEventCodeError] = useState('')
   const [registrationError, setRegistrationError] = useState('')
-  const [guestUserRole, setGuestUserRole] = useState<GuestUserRole | null>(null)
   const [resendCounter, setResendCounter] = useState(60) // 60 seconds
   const [isSendingOTP, setIsSendingOTP] = useState(false)
   const [isVerifyingOTP, setIsVerifyingOTP] = useState(false)
-  const [isVerifyingEventCode, setIsVerifyingEventCode] = useState(false)
   const [isRegisteringUser, setIsRegisteringUser] = useState(false)
   const [OTPIsVerified, setOTPIsVerified] = useState(false)
   const [newAccountInfo, setNewAccountInfo] =
@@ -63,7 +59,7 @@ const Welcome = () => {
       }
     } catch (error) {
       console.error('Unable to OTP: ', error)
-      // noitify user (based on isResend)
+      // notify user (based on isResend)
     } finally {
       setIsSendingOTP(false)
     }
@@ -82,15 +78,15 @@ const Welcome = () => {
       if (response.status === 200 && response.data.success) {
         console.log('OTP verified successfully')
 
-        const { isNewAccount, account } = response.data
+        const { isNewAccount, userProfile } = response.data
 
         if (isNewAccount) {
           setOTPIsVerified(true)
-          console.log('Account: ', account)
-          setNewAccountInfo(account)
+          console.log('User Profile: ', userProfile)
+          setNewAccountInfo(userProfile)
         } else {
-          console.log('user: ', account)
-          localStorage.setItem('user', JSON.stringify(account))
+          console.log('User Profile: ', userProfile)
+          localStorage.setItem('user', JSON.stringify(userProfile))
           navigate(`/`)
         }
       }
@@ -107,21 +103,26 @@ const Welcome = () => {
   }
 
   const registerUser = async () => {
-    console.log('REGISTERING USER')
+    console.log('REGISTERING USER...')
+
     try {
       setIsRegisteringUser(true)
 
       console.log('New acc info: ', newAccountInfo)
 
-      const accountInfo = {
+      const userProfile = {
+      baseProfile: {
         ...newAccountInfo,
         name
-      }
-      const response = await axios.post('api/v1/accounts', { accountInfo })
+      } as IUserFields,
+      profileByRole: {} as IUserFields,
+    };
+
+      const response = await axios.post('api/v1/accounts', { ...userProfile })
 
       if (response.status === 201) {
-        console.log('user: ', response.data.account)
-        localStorage.setItem('user', JSON.stringify(response.data.account))
+        console.log('User Profile: ', response.data)
+        localStorage.setItem('user', JSON.stringify(response.data))
         navigate('/')
       } else {
         console.error('Error: ', response.data)
@@ -134,47 +135,6 @@ const Welcome = () => {
       )
     } finally {
       setIsRegisteringUser(false)
-    }
-  }
-
-  const verifyEventCode = async () => {
-    setIsVerifyingEventCode(true)
-
-    try {
-      const response = await axios.get(
-        `api/v1/events/event?eventCode=${eventCode}&guestUserRole=${guestUserRole}`
-      )
-
-      if (response.status === 200) {
-        // notify user
-        localStorage.setItem(
-          'guestUserData',
-          JSON.stringify({
-            eventCode: eventCode,
-            eventId: response.data._id,
-            role: guestUserRole
-          })
-        )
-
-        if (guestUserRole === GuestUserRole.JUDGE) {
-          navigate(`/leaderboard/${response.data._id}`)
-        } else if (guestUserRole === GuestUserRole.PARTICIPANT) {
-          navigate(`/leaderboard/${response.data._id}?asLeaderboard=true`)
-        }
-      } else {
-        setEventCodeError(
-          'We could not find an event with the code you provided'
-        )
-        // notify user
-      }
-    } catch (error) {
-      console.error('Unable to verify event code: ', error)
-      setEventCodeError(
-        'We encountered an issue while verifying your event code. Please try again later'
-      )
-      // notify user
-    } finally {
-      setIsVerifyingEventCode(false)
     }
   }
 
@@ -230,7 +190,7 @@ const Welcome = () => {
                 {activeViewIndex === WelcomePageActiveViewIndex.LOGIN && (
                   <div className="flex flex-col gap-4">
                     <h3 className="bg-gradient-to-r from-white via-gray-400 to-black bg-clip-text text-2xl font-semibold text-transparent md:text-3xl">
-                      Welcome to HaTchBoard
+                      Welcome to BuyAfrica
                     </h3>
 
                     <p>
@@ -253,33 +213,6 @@ const Welcome = () => {
                         onClick={sendOTP}
                       />
                     </div>
-
-                    <p className="text-center text-sm">
-                      Looking to join an event? Join{' '}
-                      <button
-                        onClick={() => {
-                          setGuestUserRole(GuestUserRole.JUDGE)
-                          handleViewChange(
-                            WelcomePageActiveViewIndex.JOIN_EVENT
-                          )
-                        }}
-                        className="text-primary font-bold hover:underline"
-                      >
-                        as a judge
-                      </button>{' '}
-                      OR{' '}
-                      <button
-                        onClick={() => {
-                          setGuestUserRole(GuestUserRole.PARTICIPANT)
-                          handleViewChange(
-                            WelcomePageActiveViewIndex.JOIN_EVENT
-                          )
-                        }}
-                        className="text-primary font-bold hover:underline"
-                      >
-                        a participant
-                      </button>
-                    </p>
                   </div>
                 )}
 
@@ -340,60 +273,6 @@ const Welcome = () => {
                     >
                       Use a different email
                     </button>
-                  </div>
-                )}
-
-                {activeViewIndex === WelcomePageActiveViewIndex.JOIN_EVENT && (
-                  <div className="flex flex-col gap-4">
-                    <div className="items-center justify-between">
-                      <h3 className="bg-gradient-to-r from-white via-gray-400 to-black bg-clip-text text-2xl font-semibold text-transparent md:text-3xl">
-                        {guestUserRole === GuestUserRole.JUDGE
-                          ? 'Enter Your Unique Code'
-                          : 'Enter Event Code'}
-                      </h3>
-                    </div>
-
-                    <p>
-                      {guestUserRole === GuestUserRole.JUDGE
-                        ? 'Enter the unique 6-digit code sent to your email to join in'
-                        : 'Enter your event code below to join in'}
-                    </p>
-
-                    <div className="my-3 w-full space-y-3">
-                      <AppTextInput
-                        customStyles="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                        autoFocus
-                        maxLength={6}
-                        onChange={(e) => setEventCode(e.target.value)}
-                        placeholder="X X X X X X"
-                        type="number"
-                        value={eventCode}
-                      />
-                      {eventCodeError && (
-                        <p className="text-center text-red-400 dark:text-red-400/80 text-sm mt-2">
-                          {eventCodeError}
-                        </p>
-                      )}
-
-                      <AppButton
-                        buttonText="Let me Inside"
-                        disabled={isVerifyingEventCode || !eventCode}
-                        isLoading={isVerifyingEventCode}
-                        onClick={verifyEventCode}
-                      />
-                    </div>
-
-                    <div className="flex items-center justify-center space-x-1">
-                      <p>How about you</p>
-                      <button
-                        onClick={() =>
-                          handleViewChange(WelcomePageActiveViewIndex.LOGIN)
-                        }
-                        className="w-fit mx-auto from-primary via-primary to-secondary bg-gradient-to-r bg-clip-text font-bold text-transparent hover:scale-[1.01] transition-transform ease-in-out"
-                      >
-                        host an event?
-                      </button>
-                    </div>
                   </div>
                 )}
               </>
