@@ -5,8 +5,8 @@ import {
     getProducts,
     // deleteProduct,
     // updateProduct,
-} from "../../handlers/product/index";
-import { protect } from "../../middleware/authMiddleware";
+} from "../../handlers/product/index.js";
+import { protect } from "../../middleware/authMiddleware.js";
 
 const productRouter = express.Router();
 

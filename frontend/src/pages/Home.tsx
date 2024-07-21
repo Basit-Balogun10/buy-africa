@@ -1,41 +1,25 @@
-import React, {
-  useState,
-  useRef,
-  ChangeEvent,
-  MouseEvent,
-  useEffect
-} from 'react'
+// Home.tsx
+import React, { useState, useRef, useEffect } from 'react'
 import Header from 'components/global/Header'
-import NewChat from 'components/NewChat'
 import AppButton from 'components/global/AppButton'
 import { IoSendSharp, IoCloseSharp } from 'react-icons/io5'
 import { BsCamera } from 'react-icons/bs'
-import { Message } from 'types'
+import { dummyProducts, Product } from '../localData'
+import ProductList from 'components/ProductsList'
 
 const Home = () => {
-  const [messages, setMessages] = useState<Message[]>([])
-  const [sideMenuIsVisible, setSideMenuIsVisible] = useState(false)
-  const [isFetchingResponse, setIsFetchingResponse] = useState(false)
-  const imageData = useRef<string | ArrayBuffer | null>(null)
   const [userInput, setUserInput] = useState('')
-  const { formData, setFormData } = useState({})
+  const [isFetchingResponse, setIsFetchingResponse] = useState(false)
+  const [showProducts, setShowProducts] = useState(false)
+  const imageData = useRef<string | ArrayBuffer | null>(null)
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e?.target?.files?.[0]
-    setFormData({ ...formData, userInput: '' })
-
     if (file) {
       const reader = new FileReader()
-
-      reader.onloadend = async () => {
-        const base64Data = reader.result
-
-        if (base64Data) {
-          imageData.current = base64Data
-          await startConversationWithAI()
-        }
+      reader.onloadend = () => {
+        imageData.current = reader.result
       }
-
       reader.readAsDataURL(file)
     }
   }
@@ -46,48 +30,39 @@ const Home = () => {
     }
   }
 
-  const startConversationWithAI = async () => {}
+  const startConversationWithAI = async () => {
+    setIsFetchingResponse(true)
+    setTimeout(() => {
+      setIsFetchingResponse(false)
+      setShowProducts(true)
+    }, 3000)
+  }
 
   return (
     <main className="relative flex flex-col items-start justify-center">
-      <div
-        className={`my-auto ${
-          sideMenuIsVisible ? 'md:w-2/3' : 'w-full'
-        } flex-col items-center justify-center transition-[width] ease-in-out`}
-      >
-        {/* A. Topmost section */}
+      <div className="w-full flex-col items-center justify-center">
         <div className="mb-12">
-          {/* Logo */}
           <div className="mt-1">
             <Header />
           </div>
         </div>
 
-        {/* B. Next section */}
-        <div
-          className={`mx-auto size-full ${
-            sideMenuIsVisible ? 'md:w-3/4' : 'md:w-1/2'
-          } space-y-4 px-4 transition-[width] ease-in-out`}
-        >
-          {/* Greeting */}
+        <div className="mx-auto size-full md:w-1/2 space-y-4 px-4">
           <h2 className="text-center text-4xl font-medium">
             Hello, My Favorite Human
           </h2>
 
-          {/* Input section */}
           <div className="relative">
             <input
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
-              onClick={() => {
-                imageData.current && removeImage()
-              }}
+              onClick={removeImage}
               name="userInput"
               type="text"
               placeholder={
                 imageData.current ? '' : 'What are you buying today...?'
               }
-              className={`w-full rounded-2xl border border-gray-300 py-4 pl-6 pr-24 outline-none transition-colors ease-in-out focus:outline-none focus:ring-2  focus:ring-secondary/60 dark:border-secondary/70 dark:bg-dark dark:hover:border-secondary/80 ${
+              className={`w-full rounded-2xl border border-gray-300 py-4 pl-6 pr-24 outline-none transition-colors ease-in-out focus:outline-none focus:ring-2 focus:ring-secondary/60 dark:border-secondary/70 dark:bg-dark dark:hover:border-secondary/80 ${
                 isFetchingResponse ? 'cursor-not-allowed' : ''
               }`}
               disabled={isFetchingResponse}
@@ -104,7 +79,6 @@ const Home = () => {
                   } rounded-lg`}
                   onClick={removeImage}
                 />
-
                 <IoCloseSharp
                   className={`absolute left-[30%] top-1/4 hidden ${
                     isFetchingResponse
@@ -148,21 +122,11 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Side menu */}
-        {/* <div
-          className={`fixed left-0 top-0 h-screen w-full flex-col justify-center border-l-2 border-l-gray-700 px-6 shadow-lg shadow-black/30 transition-transform duration-300 md:flex md:w-1/5 dark:bg-gray-900 ${
-            sideMenuIsVisible ? 'translate-x-0' : 'translate-x-full'
-          }`}
-        >
-          <div className="flex justify-end">
-            <button
-              onClick={() => setSideMenuIsVisible(false)}
-              className="rounded-full p-2 transition-colors ease-in-out dark:hover:bg-gray-800"
-            >
-              <IoCloseSharp size={24} className="text-teal-500" />
-            </button>
+        {showProducts && (
+          <div className="px-14 mx-auto">
+            <ProductList products={dummyProducts} />
           </div>
-        </div> */}
+        )}
       </div>
     </main>
   )

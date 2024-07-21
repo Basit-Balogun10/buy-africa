@@ -3,8 +3,8 @@ import { Response, NextFunction, Request } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import asyncHandler from "express-async-handler";
 import { IAccount, IUser, UserModel } from "../models/account";
-import { AppConfig } from "../config/index";
-import { AccountService } from "../services/account";
+import { AppConfig } from "../config/index.js";
+import { AccountService } from "../services/account.js";
 import { AccountRole } from "../types/index.js";
 
 export interface IAuthenticatedRequest extends Request {

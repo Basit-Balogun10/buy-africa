@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
-import { AccountService } from "../../services/account";
-import { generateToken } from "../../utils/generators";
-import { AppConfig } from "../../config/index";
-import { IAccount, IBuyer, IVendor } from "../../models/account";
+import { AccountService } from "../../services/account.js";
+import { generateToken } from "../../utils/generators.js";
+import { AppConfig } from "../../config/index.js";
+import { IAccount, IBuyer, IVendor } from "../../models/account.js";
 
 export const createAccount = asyncHandler(
     async (req: Request, res: Response) => {

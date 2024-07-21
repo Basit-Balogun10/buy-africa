@@ -1,6 +1,6 @@
 import { Router } from "express";
-import accountRouter from "./account";
-import authRouter from "./auth";
+import accountRouter from "./account.js";
+import authRouter from "./auth.js";
 import cartRouter from "./cart.js";
 import orderRouter from "./order.js";
 import productRouter from "./product.js";

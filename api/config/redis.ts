@@ -1,6 +1,6 @@
 import { createClient } from "redis";
 import { Request } from "express";
-import { AppConfig } from "./index";
+import { AppConfig } from "./index.js";
 import hash from "object-hash";
 import { RedisClientType } from "@redis/client";
 import { RedisCommandArgument } from "@redis/client/dist/lib/commands";

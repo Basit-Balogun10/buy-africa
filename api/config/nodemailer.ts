@@ -1,6 +1,6 @@
 import pug from "pug";
 import nodemailer from "nodemailer";
-import { AppConfig } from "./index";
+import { AppConfig } from "./index.js";
 
 const sendEmail = async (
     emailData: Record<string, string>,

@@ -1,8 +1,8 @@
 import { Response } from "express";
 import asyncHandler from "express-async-handler";
-import { IAuthenticatedRequest } from "../../middleware/authMiddleware";
+import { IAuthenticatedRequest } from "../../middleware/authMiddleware.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { AppConfig } from "../../config";
+import { AppConfig } from "../../config/index.js";
 
 // Import handlers
 import {

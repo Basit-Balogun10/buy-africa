@@ -14,28 +14,28 @@ const __dirname = dirname(__filename);
 
 const initializeExpressServer = async () => {
     await connectDB();
-    const redisClient = await initializeRedisClient();
-    const redisStore = new RedisStore({
-        client: redisClient,
-    });
+    // const redisClient = await initializeRedisClient();
+    // const redisStore = new RedisStore({
+    //     client: redisClient,
+    // });
 
     const app = express();
     app.use(express.json({ limit: "50mb" }));
     app.use(express.urlencoded({ extended: false, limit: "50mb" }));
-    app.use(
-        session({
-            store: redisStore,
-            secret: AppConfig.SECRET_KEY,
-            resave: false,
-            saveUninitialized: true,
-            cookie: {
-                maxAge: 30 * 60 * 1000, // 30 minutes in milliseconds
-                secure: true,
-                httpOnly: true,
-                sameSite: "none",
-            },
-        })
-    );
+    // app.use(
+    //     session({
+    //         store: redisStore,
+    //         secret: AppConfig.SECRET_KEY,
+    //         resave: false,
+    //         saveUninitialized: true,
+    //         cookie: {
+    //             maxAge: 30 * 60 * 1000, // 30 minutes in milliseconds
+    //             secure: true,
+    //             httpOnly: true,
+    //             sameSite: "none",
+    //         },
+    //     })
+    // );
     app.use(cookieParser());
 
     app.use("/api/v1", v1Router);

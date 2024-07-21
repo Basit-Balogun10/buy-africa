@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
-import { AppConfig } from "../../config/index";
-import { generateRandomCharacters, encryptData } from "../../utils/index";
-import "../../types/index";
-import initializeRedisClient from "../../config/redis";
-import sendEmail from "../../config/nodemailer";
-import { generateCode, generateToken } from "../../utils/generators";
+import { AppConfig } from "../../config/index.js";
+import { generateRandomCharacters, encryptData } from "../../utils/index.js";
+import "../../types/index.js";
+import initializeRedisClient from "../../config/redis.js";
+import sendEmail from "../../config/nodemailer.js";
+import { generateCode, generateToken } from "../../utils/generators.js";
 import axios from "axios";
-import { AccountService } from "../../services/account";
-import { IAuthenticatedRequest } from "../../middleware/authMiddleware";
+import { AccountService } from "../../services/account.js";
+import { IAuthenticatedRequest } from "../../middleware/authMiddleware.js";
 
 export const sendOTP = asyncHandler(async (req: Request, res: Response) => {
     const { email } = req.body;

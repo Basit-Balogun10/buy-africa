@@ -3,8 +3,8 @@ import {
     createAccount,
     getAccount,
     updateAccount,
-} from "../../handlers/account/index";
-import { protect } from "../../middleware/authMiddleware";
+} from "../../handlers/account/index.js";
+import { protect } from "../../middleware/authMiddleware.js";
 
 const accountRouter = express.Router();
 

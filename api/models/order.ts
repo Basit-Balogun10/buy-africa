@@ -3,10 +3,10 @@ import {
   DocumentWithTimeStamps,
   OrderProductVariant,
   ProductPreference,
-} from '../types';
-import { IProduct } from './product';
-import { IBuyer, IVendor } from './account';
-import { IStore } from './store';
+} from '../types/index.js';
+import { IProduct } from "./product.js";
+import { IBuyer, IVendor } from './account.js';
+import { IStore } from './store.js';
 
 export type OrderItem = {
   isReady?: boolean;

@@ -1,5 +1,5 @@
 import { FilterQuery, Types } from "mongoose";
-import Cart, { ICart } from "../models/cart";
+import Cart, { ICart } from "../models/cart.js";
 
 export class CartService {
     static async createCart(cartInfo: Partial<ICart>) {

@@ -4,7 +4,7 @@ import {
     ResourceType,
     UploadApiOptions,
 } from "cloudinary";
-import { cloudinary } from "../../config";
+import { cloudinary } from "../../config/index.js";
 
 export type CloudinaryAssetDeletionOptions = {
     resource_type: ResourceType;

@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { AppConfig } from '../../config';
-import { PaystackPaymentDetails } from '../../types';
+import { AppConfig } from '../../config/index.js';
+import { PaystackPaymentDetails } from '../../types/index.js';
 
 export class PaystackService {
   static async createPaymentLink(paymentDetails: PaystackPaymentDetails) {

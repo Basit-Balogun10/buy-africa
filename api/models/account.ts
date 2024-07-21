@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 import { AccountRole, DocumentWithTimeStamps } from "../types";
-import { IProduct } from "./product";
+import { IProduct } from "./product.js";
 
 export interface IAccount extends DocumentWithTimeStamps {
     name: string;

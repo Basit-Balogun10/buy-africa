@@ -3,7 +3,7 @@ import {
     DocumentWithTimeStamps,
     ProductPreference,
     ProductVariant,
-} from "../types";
+} from "../types/index.js";
 
 export interface IProduct extends DocumentWithTimeStamps {
     name: string;

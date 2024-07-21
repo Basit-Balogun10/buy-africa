@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import { AppConfig } from "../config/index";
+import { AppConfig } from "../config/index.js";
 
 const initVector = AppConfig.INIT_VECTOR;
 const secretKey = AppConfig.SECRET_KEY;

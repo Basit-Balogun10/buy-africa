@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
-import { AppConfig } from "../config/index";
-import { IAccount, IUser } from "../models/account";
+import { AppConfig } from "../config/index.js";
+import { IAccount, IUser } from "../models/account.js";
 
 export const generateToken = (user: IUser, account: IAccount) => {
     const issuedAt = new Date().getTime();

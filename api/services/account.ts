@@ -7,8 +7,8 @@ import Account, {
     Buyer,
     UserModel,
     Vendor,
-} from "../models/account";
-import { AccountRole } from "../types";
+} from "../models/account.js";
+import { AccountRole } from "../types/index.js";
 
 export class AccountService {
     static async createAccount(

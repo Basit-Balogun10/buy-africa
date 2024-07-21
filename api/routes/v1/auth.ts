@@ -1,5 +1,5 @@
 import express from "express";
-import { logout, sendOTP, verifyOTP } from "../../handlers/auth/index";
+import { logout, sendOTP, verifyOTP } from "../../handlers/auth/index.js";
 
 const authRouter = express.Router();
 
