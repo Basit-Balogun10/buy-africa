@@ -127,8 +127,9 @@ export const verifyOTP = asyncHandler(async (req: Request, res: Response) => {
         if (account) {
             console.log("Account exists");
 
-            const associatedUserObject = await AccountService.getAssociatedUserObject(account);
-            
+            const associatedUserObject =
+                await AccountService.getAssociatedUserObject(account);
+
             let token;
             if (associatedUserObject) {
                 token = generateToken(associatedUserObject, account);
@@ -136,13 +137,10 @@ export const verifyOTP = asyncHandler(async (req: Request, res: Response) => {
                 console.error("User not found");
             }
 
-
-            const resData = {
-                account,
-                isNewAccount: false,
-                message: "OTP verification successful",
-                success: true,
+            const userProfile = {
+                baseProfile: account,
                 token,
+                profileByRole: associatedUserObject,
             };
 
             const cookieOptions = {
@@ -153,12 +151,17 @@ export const verifyOTP = asyncHandler(async (req: Request, res: Response) => {
             };
 
             res.cookie(AppConfig.AUTH_HEADER_NAME, token, cookieOptions);
-            res.status(200).json(resData);
+            res.status(200).json({
+                success: true,
+                message: "OTP verification successful",
+                isNewAccount: false,
+                userProfile,
+            });
         } else {
             console.log("New account");
 
             res.status(200).json({
-                account: { email },
+                userProfile: { email },
                 isNewAccount: true,
                 message: "OTP verification successful",
                 success: true,

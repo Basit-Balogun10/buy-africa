@@ -1,0 +1,49 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href="https://fonts.cdnfonts.com/css/niveau-grotesk-regular")
+
+    title Just a Friendly Confirmation Check
+    style.
+      body {
+        font-family: 'Niveau Grotesk', sans-serif;
+        background-color: #18181A;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 2px solid #FFD700;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        color: rgb(156, 163, 175);
+      }
+      p {
+        color: rgb(156, 163, 175);
+      }
+      .button {
+        display: block;
+        padding: 15px;
+        background-color: #283106;
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+
+  body
+    div(class="container")
+      h1 BuyAfrica
+      p Hello,
+      p We received a request to verify this email address with us. If you did not make this request, you can safely ignore this email.
+      p If you did, please enter the following code to complete the verification process.
+      h3 #{OTP}
+      p The code remains valid for 5 minutes and can only be used once. If you have any questions, don't hesitate to contact our support team.
+      
+      p Cheers,
+      p The BuyAfrica Team
