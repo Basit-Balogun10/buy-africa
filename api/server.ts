@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 import path, { dirname } from "path";
 import RedisStore from "connect-redis";
 import v1Router from "./routes/v1/index.js";
-import { AppConfig } from "./config/index/.js";
+import { AppConfig } from "./config/index.js";
 import connectDB from "./config/db.js";
 import { errorHandler } from "./middleware/errorMiddleware.js";
 import initializeRedisClient from "./config/redis.js";
