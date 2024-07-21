@@ -273,11 +273,7 @@ export const updateOrder = asyncHandler(async (req: IAuthenticatedRequest, res: 
     if (!order) {
       res.status(404).json({ error: 'Order not found' });
       return;
-    } else if (order.currentStatus === OrderStatus.CANCELLED) {
-      res.status(403).json({ errorMsg: `Order has been cancelled by the ${AccountRole.BUYER}`, orderAlreadyCancelled: true });
     }
-
-    const { currentStatus } = updatedFields;
 
     const updatedOrder = await OrderService.updateOrder(orderId, updatedFields);
 

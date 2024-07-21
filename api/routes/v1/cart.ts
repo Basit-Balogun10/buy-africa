@@ -1,17 +1,17 @@
 import express from "express";
 import {
-    createOrder,
-    getOrders,
-    getOrder,
-    updateOrder,
-} from "../../handlers/order/index.js";
+    createCart,
+    getCarts,
+    getCart,
+    updateCart,
+} from "../../handlers/cart/index.js";
 import { protect } from "../../middleware/authMiddleware.js";
 
-const orderRouter = express.Router();
+const cartRouter = express.Router();
 
-orderRouter.get("/", protect, getOrders);
-orderRouter.post("/", protect, createOrder);
-orderRouter.get("/:orderId", protect, getOrder);
-orderRouter.put("/:orderId", protect, updateOrder);
+cartRouter.get("/", protect, getCarts);
+cartRouter.post("/", protect, createCart);
+cartRouter.get("/:cartId", protect, getCart);
+cartRouter.put("/:cartId", protect, updateCart);
 
-export default orderRouter;
+export default cartRouter;

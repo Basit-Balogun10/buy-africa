@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import axios from 'axios'
-import Logo from 'components/Logo'
-import AppButton from 'components/AppButton'
-import AppTextInput from 'components/AppTextInput'
+import Logo from 'components/global/Logo'
+import AppButton from 'components/global/AppButton'
+import AppTextInput from 'components/global/AppTextInput'
 import { IAccount, IUserFields, WelcomePageActiveViewIndex } from '../types'
 import { getDataFromQueryParams } from '../helpers'
 
@@ -111,12 +111,12 @@ const Welcome = () => {
       console.log('New acc info: ', newAccountInfo)
 
       const userProfile = {
-      baseProfile: {
-        ...newAccountInfo,
-        name
-      } as IUserFields,
-      profileByRole: {} as IUserFields,
-    };
+        baseProfile: {
+          ...newAccountInfo,
+          name
+        } as IUserFields,
+        profileByRole: {} as IUserFields
+      }
 
       const response = await axios.post('api/v1/accounts', { ...userProfile })
 
@@ -193,9 +193,7 @@ const Welcome = () => {
                       Welcome to BuyAfrica
                     </h3>
 
-                    <p>
-                      Host and manage your hackathon and pitch events with ease.
-                    </p>
+                    <p>Get started with your email address</p>
 
                     <div className="my-3 w-full space-y-3">
                       <AppTextInput

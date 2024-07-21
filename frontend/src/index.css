@@ -1,0 +1,29 @@
+html,
+body {
+  margin: 0;
+  overflow-x: hidden;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+*::-webkit-scrollbar {
+  width: 0.3rem;
+}
+
+*::-webkit-scrollbar {
+  background: #18181a;
+}
+
+html *::-webkit-scrollbar-track {
+  background: #18181a;
+}
+
+html.dark *::-webkit-scrollbar-track {
+  background: #18181a;
+  border-radius: 20px;
+}
+
+html *::-webkit-scrollbar-thumb {
+  background: #4f21ea;
+  border-radius: 20px;
+}

@@ -209,58 +209,58 @@ export const getProducts = asyncHandler(
     }
 );
 
-export const updateProduct = asyncHandler(
-    async (req: Request, res: Response) => {
-        const { productId } = req.params;
-        const updatedFields = req.body;
+// export const updateProduct = asyncHandler(
+//     async (req: Request, res: Response) => {
+//         const { productId } = req.params;
+//         const updatedFields = req.body;
 
-        if (!productId || !updatedFields) {
-            res.status(400).json({
-                error: "Invalid request. Please provide product ID and the updated fields",
-            });
-            return;
-        }
-        try {
-            const product = await Product.findById(productId);
+//         if (!productId || !updatedFields) {
+//             res.status(400).json({
+//                 error: "Invalid request. Please provide product ID and the updated fields",
+//             });
+//             return;
+//         }
+//         try {
+//             const product = await Product.findById(productId);
 
-            if (!product) {
-                res.status(404).json({
-                    error: "Product with the provided ID not found",
-                });
-                return;
-            }
+//             if (!product) {
+//                 res.status(404).json({
+//                     error: "Product with the provided ID not found",
+//                 });
+//                 return;
+//             }
 
-            const updatedProduct = await ProductService.updateProduct(
-                productId,
-                updatedFields,
-                product
-            );
+//             const updatedProduct = await ProductService.updateProduct(
+//                 productId,
+//                 updatedFields,
+//                 product
+//             );
 
-            res.status(200).json(updatedProduct);
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ error: "Unable to update product" });
-        }
-    }
-);
+//             res.status(200).json(updatedProduct);
+//         } catch (error) {
+//             console.error(error);
+//             res.status(500).json({ error: "Unable to update product" });
+//         }
+//     }
+// );
 
-export const deleteProduct = asyncHandler(
-    async (req: Request, res: Response) => {
-        const { productId } = req.params;
+// export const deleteProduct = asyncHandler(
+//     async (req: Request, res: Response) => {
+//         const { productId } = req.params;
 
-        if (!productId) {
-            res.status(400).json({
-                error: "Invalid request. Please provide product ID",
-            });
-        }
+//         if (!productId) {
+//             res.status(400).json({
+//                 error: "Invalid request. Please provide product ID",
+//             });
+//         }
 
-        try {
-            await ProductService.deleteProductById(productId);
+//         try {
+//             await ProductService.deleteProductById(productId);
 
-            res.status(204).end();
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ error: "Unable to delete product" });
-        }
-    }
-);
+//             res.status(204).end();
+//         } catch (error) {
+//             console.error(error);
+//             res.status(500).json({ error: "Unable to delete product" });
+//         }
+//     }
+// );

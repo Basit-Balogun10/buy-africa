@@ -8,7 +8,7 @@ export const getCarts = asyncHandler(async (req: IAuthenticatedRequest, res: Res
   console.log("GETTING CARTS...")
 
   try {
-    const carts = await CartService.getCarts(req!.user!._id)
+    const carts = await CartService.getCarts(req!.user!._id as string)
       
     res.json(carts);
   } catch (error) {

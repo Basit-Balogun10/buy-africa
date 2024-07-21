@@ -1,0 +1,41 @@
+import { Request, Response } from "express";
+import asyncHandler from "express-async-handler";
+import { v4 as uuidv4 } from "uuid";
+import { PaystackService } from "../../services/third-party/paystack.js";
+import { PaystackPaymentChannels, PaystackPaymentDetails } from "../../types/index.js";
+
+export const createPaystackPaymentLink = asyncHandler(
+    async (req: Request, res: Response) => {
+        console.log("callback: ", req.body.callback_url);
+
+        const paymentDetails: PaystackPaymentDetails = {
+            reference: uuidv4(),
+            callback_url: req.body.callback_url,
+            amount: Number(req.body.amount) * 100,
+            email: req.body.email,
+            channels: [
+                "card",
+                "bank",
+                "ussd",
+                "qr",
+                "mobile_money",
+                "bank_transfer",
+                "eft",
+            ] as PaystackPaymentChannels[],
+            metadata: {
+                cancel_action: req.body.cancellation_url,
+            },
+        };
+
+        try {
+            const response = await PaystackService.createPaymentLink(
+                paymentDetails
+            );
+
+            res.status(200).json(response);
+        } catch (err) {
+            console.error("Unable to create Paystack payment link: ", err);
+            res.status(500).json({ error: "Internal Server Error" });
+        }
+    }
+);

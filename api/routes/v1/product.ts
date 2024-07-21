@@ -3,8 +3,8 @@ import {
     createProduct,
     getProduct,
     getProducts,
-    deleteProduct,
-    updateProduct,
+    // deleteProduct,
+    // updateProduct,
 } from "../../handlers/product/index";
 import { protect } from "../../middleware/authMiddleware";
 
@@ -14,7 +14,7 @@ productRouter.post("/", protect, createProduct);
 productRouter.get("/", protect, getProducts);
 
 productRouter.get("/:productId", protect, getProduct);
-productRouter.put("/:productId", protect, updateProduct);
-productRouter.delete("/:productId", protect, deleteProduct);
+// productRouter.put("/:productId", protect, updateProduct);
+// productRouter.delete("/:productId", protect, deleteProduct);
 
 export default productRouter;

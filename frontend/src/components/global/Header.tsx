@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Logo from './Logo'
-import { IAccount, WelcomePageActiveViewIndex } from '../../types'
+import { IAccount } from '../../types'
 import axios from 'axios'
 import AppButton from './AppButton'
 
@@ -39,7 +39,7 @@ const Header = ({
   }
 
   return (
-    <div className="flex items-center justify-between mb-6">
+    <div className="flex items-center justify-between mb-6 px-12 mt-6">
       <Logo />
 
       {user ? (
@@ -53,15 +53,13 @@ const Header = ({
           />
         </div>
       ) : (
-        <div className="flex md:w-[45%] items-center gap-x-8">
-          <AppButton
+        <div className="flex md:w-[15%] items-center gap-x-8">
+          {/* <AppButton
             buttonText="Register"
             disabled={isLoggingOut}
             isLoading={isLoggingOut}
-            onClick={() =>
-              navigate(`/welcome`)
-            }
-          />
+            onClick={() => navigate(`/welcome`)}
+          /> */}
         </div>
       )}
     </div>

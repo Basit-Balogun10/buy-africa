@@ -5,16 +5,16 @@ const Logo = () => {
     <div className="mt-2 md:text-center">
       <h1 className="font-[cursive] text-4xl font-medium">
         <span className="from-primary via-primary to-secondary bg-gradient-to-r bg-clip-text text-transparent">
-          Ha
+          Buy
         </span>
         <span className="from-secondary to-primary bg-gradient-to-r from-30% to-80% bg-clip-text text-transparent">
-          T
+          A
         </span>
         <span className="from-primary via-primary to-secondary bg-gradient-to-r bg-clip-text text-transparent">
-          ch
+          fri
         </span>
         <span className="from-primary via-primary to-secondary bg-gradient-to-r bg-clip-text text-transparent">
-          Board
+          ca
         </span>
       </h1>
     </div>

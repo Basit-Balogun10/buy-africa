@@ -61,7 +61,7 @@ const initializeRedisClient = async () => {
             } else {
                 // If the client is not connected, try to reconnect
                 try {
-                    await redisClient.connect();
+                    // await redisClient.connect();
                     console.log("Reconnected to Redis successfully!");
                     return redisClient;
                 } catch (e) {
@@ -83,7 +83,7 @@ const initializeRedisClient = async () => {
             }) as RedisClientType;
 
             try {
-                await redisClient.connect();
+                // await redisClient.connect();
                 console.log("Connected to Redis successfully!");
                 return redisClient;
             } catch (e) {
