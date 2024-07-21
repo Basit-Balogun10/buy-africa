@@ -1,5 +1,5 @@
 import { Router } from "express";
-import AIApiRouter from "./ai.js";
+import AIApiRouter from "./AI.js";
 import paystackApiRouter from "./paystack.js";
 
 const thirdPartyApisRouter = Router();
