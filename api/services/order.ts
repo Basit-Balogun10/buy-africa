@@ -1,9 +1,9 @@
 import Order, { IOrder } from "../models/order.js";
 
 export class OrderService {
-    static async createOrder(order: Partial<IOrder>) {
+    static async createOrder(orderInfo: Partial<IOrder>) {
         return await Order.create({
-            ...order,
+            ...orderInfo,
         });
     }
 

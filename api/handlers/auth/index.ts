@@ -126,7 +126,16 @@ export const verifyOTP = asyncHandler(async (req: Request, res: Response) => {
 
         if (account) {
             console.log("Account exists");
-            const token = generateToken(account);
+
+            const associatedUserObject = await AccountService.getAssociatedUserObject(account);
+            
+            let token;
+            if (associatedUserObject) {
+                token = generateToken(associatedUserObject, account);
+            } else {
+                console.error("User not found");
+            }
+
 
             const resData = {
                 account,

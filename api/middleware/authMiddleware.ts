@@ -2,18 +2,21 @@ import { Response, NextFunction, Request } from "express";
 
 import jwt, { JwtPayload } from "jsonwebtoken";
 import asyncHandler from "express-async-handler";
-import { IAccount } from "../models/account";
+import { IAccount, IUser, UserModel } from "../models/account";
 import { AppConfig } from "../config/index";
 import { AccountService } from "../services/account";
+import { AccountRole } from "../types/index.js";
 
 export interface IAuthenticatedRequest extends Request {
+    user?: IUser;
     account?: Partial<IAccount>;
 }
 
 interface JWTPayload extends JwtPayload {
+    accountId: string;
     email: string;
-    id: string;
-    name: string;
+    role: AccountRole;
+    userId: string;
 }
 
 export const protect = asyncHandler(
@@ -34,18 +37,21 @@ export const protect = asyncHandler(
 
             console.log("DECODED TOKEN: ", decoded);
 
-            const { id, email, name } = decoded as JWTPayload;
+            const { accountId, email, role, userId } = decoded as JWTPayload;
+            const userModel = AccountService.getUserModelByRole(
+                (decoded as JWTPayload).role
+            );
+            const user = await (userModel as UserModel).findById(userId);
 
-            const account = await AccountService.getAccountById(id);
-
-            if (!account) {
+            if (!user) {
                 res.status(401);
                 throw new Error("Not authorized, account not found");
             } else {
+                req.user = user;
                 req.account = {
-                    id,
+                    _id: accountId,
                     email,
-                    name,
+                    role,
                 };
 
                 next();

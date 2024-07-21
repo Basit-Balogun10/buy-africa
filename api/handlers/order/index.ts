@@ -3,8 +3,8 @@ import asyncHandler from 'express-async-handler';
 import { FilterQuery, Types } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 import Order, { IOrder } from '../../models/order.js';
-import Product, { IProduct } from '../../models/order.js';
-import Cart, { ICart } from '../../models/order.js';
+import Product, { IProduct } from '../../models/product.js';
+import Cart, { ICart } from '../../models/cart.js';
 import { OrderService } from '../../services/order.js';
 import { IAuthenticatedRequest } from '../../middleware/authMiddleware.js';
 import {
@@ -202,7 +202,9 @@ export const createOrder = asyncHandler(async (req: IAuthenticatedRequest, res: 
 
   try {
     const { cartId, productId, ...orderDetails } = req.body;
-    let updatedOrderDetails: Partial<IOrder>, product: IProduct, cart: ICart;
+    let updatedOrderDetails: Partial<IOrder>;
+    let cart: ICart | null = null;
+    let product: IProduct| null = null;
 
     if (productId) {
         product = await Product.findById(productId);
@@ -220,11 +222,11 @@ export const createOrder = asyncHandler(async (req: IAuthenticatedRequest, res: 
 
     updatedOrderDetails = {
         ...orderDetails,
-        buyer: req!.user!._id, // User is sure to exist in the request since the auth middleware set it (and this route is protected)
+        buyer: req!.user!._id,
         ...(cart ? { cart: cart._id } : {}),
         ...(product ? { product: product._id } : {}),
         transactionId: uuidv4(),
-        status: OrderStatus.RECEIVED, // Default status is 'pending'
+        status: OrderStatus.RECEIVED,
     };
 
     const newOrder = await OrderService.createOrder(updatedOrderDetails);

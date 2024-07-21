@@ -2,7 +2,7 @@ import { model, Schema } from 'mongoose';
 import {
   DocumentWithTimeStamps,
   OrderProductVariant,
-  OrderProductPreference,
+  ProductPreference,
 } from '../types';
 import { IProduct } from './product';
 import { IBuyer, IVendor } from './account';
@@ -14,7 +14,7 @@ export type OrderItem = {
   quantity: number;
   price: number;
   selectedVariants: OrderProductVariant[];
-  selectedPreferences: OrderProductPreference[];
+  selectedPreferences: ProductPreference[];
 };
 export interface IOrder extends DocumentWithTimeStamps {
   buyer: Schema.Types.ObjectId | IBuyer;
