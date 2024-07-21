@@ -4,11 +4,11 @@ import session from "express-session";
 import { fileURLToPath } from "url";
 import path, { dirname } from "path";
 import RedisStore from "connect-redis";
-import v1Router from "./routes/v1/index";
-import { AppConfig } from "./config/index";
-import connectDB from "./config/db";
-import { errorHandler } from './middleware/errorMiddleware';
-import initializeRedisClient from './config/redis';
+import v1Router from "./routes/v1/index.js";
+import { AppConfig } from "./config/index/.js";
+import connectDB from "./config/db.js";
+import { errorHandler } from "./middleware/errorMiddleware.js";
+import initializeRedisClient from "./config/redis.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 

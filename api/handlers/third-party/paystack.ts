@@ -15,7 +15,7 @@ export const createPaystackPaymentLink = asyncHandler(
         const paymentDetails: PaystackPaymentDetails = {
             reference: uuidv4(),
             callback_url: AppConfig.APP_LIVE_URL,
-            amount: Number(500000) * 100,
+            amount: Number(req.body.amount) * 100,
             email: "basitbalogun10@gmail.com",
             channels: [
                 "card",
