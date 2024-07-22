@@ -1,9 +1,9 @@
-import express from "express";
-import { converseWithAI } from "../../../handlers/third-party/AI.js";
-import { protect } from "../../../middleware/authMiddleware.js";
+// import express from "express";
+// import { converseWithAI } from "../../../handlers/third-party/AI.js";
+// import { protect } from "../../../middleware/authMiddleware.js";
 
-const AIApiRouter = express.Router();
+// const AIApiRouter = express.Router();
 
-AIApiRouter.post("/conversation", protect, converseWithAI);
+// AIApiRouter.post("/conversation", protect, converseWithAI);
 
-export default AIApiRouter;
+// export default AIApiRouter;
